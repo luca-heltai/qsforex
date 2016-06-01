@@ -15,7 +15,7 @@ from qsforex.settings import OUTPUT_RESULTS_DIR
 
 class Portfolio(object):
     def __init__(
-        self, ticker, events, home_currency="GBP", 
+        self, ticker, events, home_currency="EUR", 
         leverage=20, equity=Decimal("100000.00"), 
         risk_per_trade=Decimal("0.02"), backtest=True
     ):
