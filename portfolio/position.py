@@ -19,7 +19,7 @@ class Position(object):
         self.base_currency = self.currency_pair[:3]    # For EUR/USD, this is EUR
         self.quote_currency = self.currency_pair[3:]   # For EUR/USD, this is USD
         # For EUR/USD, with account denominated in GBP, this is USD/GBP
-        self.quote_home_currency_pair = "%s%s" % (self.quote_currency, self.home_currency)
+        self.quote_home_currency_pair = "{0!s}{1!s}".format(self.quote_currency, self.home_currency)
 
         ticker_cur = self.ticker.prices[self.currency_pair]
         if self.position_type == "long":

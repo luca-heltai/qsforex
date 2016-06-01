@@ -11,7 +11,7 @@ class TickEvent(Event):
         self.ask = ask
 
     def __str__(self):
-        return "Type: %s, Instrument: %s, Time: %s, Bid: %s, Ask: %s" % (
+        return "Type: {0!s}, Instrument: {1!s}, Time: {2!s}, Bid: {3!s}, Ask: {4!s}".format(
             str(self.type), str(self.instrument), 
             str(self.time), str(self.bid), str(self.ask)
         )
@@ -29,7 +29,7 @@ class SignalEvent(Event):
         self.time = time  # Time of the last tick that generated the signal
 
     def __str__(self):
-        return "Type: %s, Instrument: %s, Order Type: %s, Side: %s" % (
+        return "Type: {0!s}, Instrument: {1!s}, Order Type: {2!s}, Side: {3!s}".format(
             str(self.type), str(self.instrument), 
             str(self.order_type), str(self.side)
         )
@@ -47,7 +47,7 @@ class OrderEvent(Event):
         self.side = side
 
     def __str__(self):
-        return "Type: %s, Instrument: %s, Units: %s, Order Type: %s, Side: %s" % (
+        return "Type: {0!s}, Instrument: {1!s}, Units: {2!s}, Order Type: {3!s}, Side: {4!s}".format(
             str(self.type), str(self.instrument), str(self.units),
             str(self.order_type), str(self.side)
         )

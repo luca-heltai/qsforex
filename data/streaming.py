@@ -30,7 +30,7 @@ class StreamingForexPrices(PriceHandler):
         "USDGBP" and place them in the prices dictionary.
         """
         getcontext().rounding = ROUND_HALF_DOWN
-        inv_pair = "%s%s" % (pair[3:], pair[:3])
+        inv_pair = "{0!s}{1!s}".format(pair[3:], pair[:3])
         inv_bid = (Decimal("1.0")/bid).quantize(
             Decimal("0.00001")
         )
@@ -40,7 +40,7 @@ class StreamingForexPrices(PriceHandler):
         return inv_pair, inv_bid, inv_ask
 
     def connect_to_stream(self):
-        pairs_oanda = ["%s_%s" % (p[:3], p[3:]) for p in self.pairs]
+        pairs_oanda = ["{0!s}_{1!s}".format(p[:3], p[3:]) for p in self.pairs]
         pair_list = ",".join(pairs_oanda)
         try:
             requests.packages.urllib3.disable_warnings()
@@ -67,7 +67,7 @@ class StreamingForexPrices(PriceHandler):
                     msg = json.loads(dline)
                 except Exception as e:
                     self.logger.error(
-                        "Caught exception when converting message into json: %s" % str(e)
+                        "Caught exception when converting message into json: {0!s}".format(str(e))
                     )
                     return
                 if "instrument" in msg or "tick" in msg:

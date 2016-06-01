@@ -54,7 +54,7 @@ class OANDAExecutionHandler(ExecutionHandler):
         return httplib.HTTPSConnection(self.domain)
 
     def execute_order(self, event):
-        instrument = "%s_%s" % (event.instrument[:3], event.instrument[3:])
+        instrument = "{0!s}_{1!s}".format(event.instrument[:3], event.instrument[3:])
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
             "Authorization": "Bearer " + self.access_token
@@ -67,7 +67,7 @@ class OANDAExecutionHandler(ExecutionHandler):
         })
         self.conn.request(
             "POST", 
-            "/v1/accounts/%s/orders" % str(self.account_id), 
+            "/v1/accounts/{0!s}/orders".format(str(self.account_id)), 
             params, headers
         )
         response = self.conn.getresponse().read().decode("utf-8").replace("\n","").replace("\t","")

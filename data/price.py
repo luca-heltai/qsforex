@@ -49,7 +49,7 @@ class PriceHandler(object):
         inv_prices_dict = dict(
             (k, v) for k,v in [
                 (
-                    "%s%s" % (p[3:], p[:3]), 
+                    "{0!s}{1!s}".format(p[3:], p[:3]), 
                     {"bid": None, "ask": None, "time": None}
                 ) for p in self.pairs
             ]
@@ -64,7 +64,7 @@ class PriceHandler(object):
         "USDGBP" and place them in the prices dictionary.
         """
         getcontext().rounding = ROUND_HALF_DOWN
-        inv_pair = "%s%s" % (pair[3:], pair[:3])
+        inv_pair = "{0!s}{1!s}".format(pair[3:], pair[:3])
         inv_bid = (Decimal("1.0")/bid).quantize(
             Decimal("0.00001")
         )
@@ -136,7 +136,7 @@ class HistoricCSVPriceHandler(PriceHandler):
         in a chronological fashion.
         """
         for p in self.pairs:
-            pair_path = os.path.join(self.csv_dir, '%s_%s.csv' % (p, date_str))
+            pair_path = os.path.join(self.csv_dir, '{0!s}_{1!s}.csv'.format(p, date_str))
             self.pair_frames[p] = pd.io.parsers.read_csv(
                 pair_path, header=True, index_col=0, 
                 parse_dates=True, dayfirst=True,

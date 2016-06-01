@@ -77,7 +77,7 @@ class Portfolio(object):
         out_file = open(os.path.join(OUTPUT_RESULTS_DIR, filename), "w")
         header = "Timestamp,Balance"
         for pair in self.ticker.pairs:
-            header += ",%s" % pair
+            header += ",{0!s}".format(pair)
         header += "\n"
         out_file.write(header)
         if self.backtest:
@@ -106,7 +106,7 @@ class Portfolio(object):
         df["Drawdown"] = drawdown
         df.to_csv(out_file, index=True)
         
-        print("Simulation complete and results exported to %s" % out_filename)
+        print("Simulation complete and results exported to {0!s}".format(out_filename))
 
     def update_portfolio(self, tick_event):
         """
@@ -118,10 +118,10 @@ class Portfolio(object):
             ps = self.positions[currency_pair]
             ps.update_position_price()
         if self.backtest:
-            out_line = "%s,%s" % (tick_event.time, self.balance)
+            out_line = "{0!s},{1!s}".format(tick_event.time, self.balance)
             for pair in self.ticker.pairs:
                 if pair in self.positions:
-                    out_line += ",%s" % self.positions[pair].profit_base
+                    out_line += ",{0!s}".format(self.positions[pair].profit_base)
                 else:
                     out_line += ",0.00"
             out_line += "\n"
@@ -187,7 +187,7 @@ class Portfolio(object):
             order = OrderEvent(currency_pair, units, "market", side)
             self.events.put(order)
 
-            self.logger.info("Portfolio Balance: %s" % self.balance)
+            self.logger.info("Portfolio Balance: {0!s}".format(self.balance))
         else:
             self.logger.info("Unable to execute order as price data was insufficient.")
         

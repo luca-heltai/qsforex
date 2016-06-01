@@ -51,7 +51,7 @@ if __name__ == "__main__":
             outfile = open(
                 os.path.join(
                     settings.CSV_DATA_DIR, 
-                    "%s_%s.csv" % (
+                    "{0!s}_{1!s}.csv".format(
                         pair, d.strftime("%Y%m%d")
                     )
                 ), 
@@ -72,9 +72,9 @@ if __name__ == "__main__":
                     bid += W
                     ask_volume = 1.0 + np.random.uniform(0.0, 2.0)
                     bid_volume = 1.0 + np.random.uniform(0.0, 2.0)
-                    line = "%s,%s,%s,%s,%s\n" % (
+                    line = "{0!s},{1!s},{2!s},{3!s},{4!s}\n".format(
                         current_time.strftime("%d.%m.%Y %H:%M:%S.%f")[:-3], 
-                        "%0.5f" % ask, "%0.5f" % bid,
-                        "%0.2f00" % ask_volume, "%0.2f00" % bid_volume
+                        "{0:0.5f}".format(ask), "{0:0.5f}".format(bid),
+                        "{0:0.2f}00".format(ask_volume), "{0:0.2f}00".format(bid_volume)
                     )
                     outfile.write(line)
