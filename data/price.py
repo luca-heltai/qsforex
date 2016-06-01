@@ -42,17 +42,17 @@ class PriceHandler(object):
         be more robust and straightforward to follow.
         """
         prices_dict = dict(
-            (k, v) for k,v in [
+            (k, v) for k,v in (
                 (p, {"bid": None, "ask": None, "time": None}) for p in self.pairs
-            ]
+            )
         )
         inv_prices_dict = dict(
-            (k, v) for k,v in [
+            (k, v) for k,v in (
                 (
                     "%s%s" % (p[3:], p[:3]), 
                     {"bid": None, "ask": None, "time": None}
                 ) for p in self.pairs
-            ]
+            )
         )
         prices_dict.update(inv_prices_dict)
         return prices_dict
@@ -121,7 +121,7 @@ class HistoricCSVPriceHandler(PriceHandler):
         of date strings of the form "YYYYMMDD". 
         """
         csv_files = self._list_all_csv_files()
-        de_dup_csv = list(set([d[7:-4] for d in csv_files]))
+        de_dup_csv = list({[d[7:-4] for d in csv_files]})
         de_dup_csv.sort()
         return de_dup_csv
 
