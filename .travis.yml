@@ -22,6 +22,6 @@ install:
 - pip install git+https://github.com/oanda/oandapy.git
 - pip install coveralls
 script:
-- nosetests tests
+- nosetests --with-coverage --cover-package=event --cover-package=backtest --cover-package=execution --cover-package=portfolio --cover-package=strategy --cover-package=trading --cover-package=performance tests
 #after_success:
-#- coveralls --config_file .coveragerc
+- coveralls 
