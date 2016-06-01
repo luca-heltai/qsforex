@@ -57,7 +57,7 @@ def test_stream():
             if displayHeartbeat:
                 print line
             else:
-                if msg.has_key("instrument") or msg.has_key("tick"):
+                if "instrument" in msg or "tick" in msg:
                     print line
             lineno += 1
             if lineno >= maxLines:
