@@ -1,8 +1,6 @@
 # QuantStart Forex
 [![Build Status](https://travis-ci.org/luca-heltai/qsforex.svg?branch=master)](https://travis-ci.org/luca-heltai/qsforex)
-
 [![Coverage Status](https://coveralls.io/repos/github/luca-heltai/qsforex/badge.svg?branch=master)](https://coveralls.io/github/luca-heltai/qsforex?branch=master)
-
 [![Code Issues](https://www.quantifiedcode.com/api/v1/project/c728eb10c5ab4f24be08462bf7a6a0f8/badge.svg)](https://www.quantifiedcode.com/app/project/c728eb10c5ab4f24be08462bf7a6a0f8)
 
 QSForex is an open-source event-driven backtesting and live trading platform for use in the foreign exchange ("forex") markets, currently in an "alpha" state.
