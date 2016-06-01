@@ -39,8 +39,8 @@ def connect_to_stream():
         print "Caught exception when connecting to stream\n" + str(e) 
 
 def test_stream():
-    displayHeartbeat = True
-    maxLines = 5
+    display_heartbeat = True
+    max_lines = 5
     response = connect_to_stream()
     if response.status_code != 200:
         print response.text
@@ -54,11 +54,11 @@ def test_stream():
                 print "Caught exception when converting message into json\n" + str(e)
                 return
             
-            if displayHeartbeat:
+            if display_heartbeat:
                 print line
             else:
                 if "instrument" in msg or "tick" in msg:
                     print line
             lineno += 1
-            if lineno >= maxLines:
+            if lineno >= max_lines:
                 break
