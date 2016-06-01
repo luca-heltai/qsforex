@@ -19,9 +19,8 @@ before_install:
 install:
 - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose
   dateutil pandas statsmodels requests
-- pip install git+https://github.com/oanda/oandapy.git. oandapy
+- pip install git+https://github.com/oanda/oandapy.git
 - pip install coveralls
-- ./setup.sh
 script:
 - nosetests tests
 #after_success:
