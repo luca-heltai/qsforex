@@ -1,64 +1,59 @@
-from datetime import datetime
-import requests
-import oandapy
 import json
 import os
 
-oanda_access_token = os.environ.get('OANDA_API_ACCESS_TOKEN', None)
-oanda_account_id = os.environ.get('OANDA_API_ACCOUNT_ID', None)
+import oandapy
+import requests
+import threading
+from qsforex import settings
+from qsforex.data.streaming import StreamingForexPrices
+try:
+    import Queue as queue
+except ImportError:
+    import queue
+
+
 instruments = "EUR_USD"
+
 
 def test_rest_connection():
     # Initiate a connection, and get current EUR_USD price
     oanda = oandapy.API(environment="live",
-                        access_token=oanda_access_token)
-    
-    response = oanda.get_prices(instruments="EUR_USD")
+                        access_token=settings.ACCESS_TOKEN)
+
+    response = oanda.get_prices(instruments=instruments)
     prices = response.get("prices")
     buy_price = prices[0].get("bid")
 
 
-def connect_to_stream():
-    # Replace the following variables with your personal ones
-    domain = 'stream-fxtrade.oanda.com'
-
-
-    try:
-        s = requests.Session()
-        url = "https://" + domain + "/v1/prices"
-        headers = {'Authorization' : 'Bearer ' + oanda_access_token,
-                   'X-Accept-Datetime-Format' : 'unix'}
-        
-        params = {'instruments' : instruments, 'accountId' : oanda_account_id}
-        req = requests.Request('GET', url, headers = headers, params = params)
-        pre = req.prepare()
-        resp = s.send(pre, stream = True, verify = True)
-        return resp
-    except Exception as e:
-        s.close()
-        print "Caught exception when connecting to stream\n" + str(e) 
-
 def test_stream():
-    display_heartbeat = True
-    max_lines = 5
-    response = connect_to_stream()
-    if response.status_code != 200:
-        print response.text
-        return
-    lineno = 0
+    # Create the OANDA market price streaming class
+    # making sure to provide authentication commands
+    pairs = ['EURUSD']
+
+    # Fix the length of the queue to 5 objects
+    events = queue.Queue(5)
+
+    prices = StreamingForexPrices(
+        settings.STREAM_DOMAIN,
+        settings.ACCESS_TOKEN,
+        settings.ACCOUNT_ID,
+        pairs
+    )
+
+    response = prices.connect_to_stream()
+    assert response.status_code == 200, \
+        "Response status code is %, aborting" % (response.status_code)
+
+    # Waits for 3 ticks, then exit with success
+    max_lines = 3
+    n_lines = 0
     for line in response.iter_lines(1):
-        if line:
-            try:
-                msg = json.loads(line)
-            except Exception as e:
-                print "Caught exception when converting message into json\n" + str(e)
-                return
-            
-            if display_heartbeat:
-                print line
-            else:
-                if "instrument" in msg or "tick" in msg:
-                    print line
-            lineno += 1
-            if lineno >= max_lines:
-                break
+        tev = prices.process_line(line)
+        if tev is not None:
+            print tev
+            n_lines += 1
+        if n_lines >= max_lines:
+            break
+    response.connection.close()
+
+test_stream()

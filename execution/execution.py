@@ -38,11 +38,13 @@ class SimulatedExecution(object):
     Instead, the Portfolio object actually provides fill handling.
     This will be modified in later versions.
     """
+
     def execute_order(self, event):
         pass
 
 
 class OANDAExecutionHandler(ExecutionHandler):
+
     def __init__(self, domain, access_token, account_id):
         self.domain = domain
         self.access_token = access_token
@@ -57,19 +59,20 @@ class OANDAExecutionHandler(ExecutionHandler):
         instrument = "%s_%s" % (event.instrument[:3], event.instrument[3:])
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
-            "Authorization": "Bearer " + self.access_token
+            # Uncomment next line to allow real execution
+            # "Authorization": "Bearer " + self.access_token
         }
         params = urlencode({
-            "instrument" : instrument,
-            "units" : event.units,
-            "type" : event.order_type,
-            "side" : event.side
+            "instrument": instrument,
+            "units": event.units,
+            "type": event.order_type,
+            "side": event.side
         })
         self.conn.request(
-            "POST", 
-            "/v1/accounts/%s/orders" % str(self.account_id), 
+            "POST",
+            "/v1/accounts/%s/orders" % str(self.account_id),
             params, headers
         )
-        response = self.conn.getresponse().read().decode("utf-8").replace("\n","").replace("\t","")
+        response = self.conn.getresponse().read().decode(
+            "utf-8").replace("\n", "").replace("\t", "")
         self.logger.debug(response)
-        
