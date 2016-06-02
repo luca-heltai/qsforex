@@ -42,14 +42,14 @@ class PriceHandler(object):
         be more robust and straightforward to follow.
         """
         prices_dict = dict(
-            (k, v) for k,v in (
+            (k, v) for k, v in (
                 (p, {"bid": None, "ask": None, "time": None}) for p in self.pairs
             )
         )
         inv_prices_dict = dict(
-            (k, v) for k,v in (
+            (k, v) for k, v in (
                 (
-                    "%s%s" % (p[3:], p[:3]), 
+                    "%s%s" % (p[3:], p[:3]),
                     {"bid": None, "ask": None, "time": None}
                 ) for p in self.pairs
             )
@@ -65,10 +65,10 @@ class PriceHandler(object):
         """
         getcontext().rounding = ROUND_HALF_DOWN
         inv_pair = "%s%s" % (pair[3:], pair[:3])
-        inv_bid = (Decimal("1.0")/bid).quantize(
+        inv_bid = (Decimal("1.0") / bid).quantize(
             Decimal("0.00001")
         )
-        inv_ask = (Decimal("1.0")/ask).quantize(
+        inv_ask = (Decimal("1.0") / ask).quantize(
             Decimal("0.00001")
         )
         return inv_pair, inv_bid, inv_ask
@@ -81,7 +81,7 @@ class HistoricCSVPriceHandler(PriceHandler):
     to the provided events queue.
     """
 
-    def __init__(self, pairs, events_queue, csv_dir):
+    def __init__(self, pairs, csv_dir):
         """
         Initialises the historic data handler by requesting
         the location of the CSV files and a list of symbols.
@@ -129,7 +129,7 @@ class HistoricCSVPriceHandler(PriceHandler):
         """
         Opens the CSV files from the data directory, converting
         them into pandas DataFrames within a pairs dictionary.
-        
+
         The function then concatenates all of the separate pairs
         for a single day into a single data frame that is time 
         ordered, allowing tick data events to be added to the queue 
@@ -138,7 +138,7 @@ class HistoricCSVPriceHandler(PriceHandler):
         for p in self.pairs:
             pair_path = os.path.join(self.csv_dir, '%s_%s.csv' % (p, date_str))
             self.pair_frames[p] = pd.io.parsers.read_csv(
-                pair_path, header=True, index_col=0, 
+                pair_path, header=True, index_col=0,
                 parse_dates=True, dayfirst=True,
                 names=("Time", "Ask", "Bid", "AskVolume", "BidVolume")
             )
@@ -147,7 +147,7 @@ class HistoricCSVPriceHandler(PriceHandler):
 
     def _update_csv_for_day(self):
         try:
-            dt = self.file_dates[self.cur_date_idx+1]
+            dt = self.file_dates[self.cur_date_idx + 1]
         except IndexError:  # End of file dates
             return False
         else:
@@ -155,7 +155,7 @@ class HistoricCSVPriceHandler(PriceHandler):
             self.cur_date_idx += 1
             return True
 
-    def stream_next_tick(self):
+    def stream_next_tick(self, events_queue):
         """
         The Backtester has now moved over to a single-threaded
         model in order to fully reproduce results on each run.
@@ -173,10 +173,10 @@ class HistoricCSVPriceHandler(PriceHandler):
             # End of the current days data
             if self._update_csv_for_day():
                 index, row = next(self.cur_date_pairs)
-            else: # End of the data
+            else:  # End of the data
                 self.continue_backtest = False
                 return
-        
+
         getcontext().rounding = ROUND_HALF_DOWN
         pair = row["Pair"]
         bid = Decimal(str(row["Bid"])).quantize(
@@ -199,4 +199,4 @@ class HistoricCSVPriceHandler(PriceHandler):
 
         # Create the tick event for the queue
         tev = TickEvent(pair, index, bid, ask)
-        self.events_queue.put(tev)
+        events_queue.put(tev)
