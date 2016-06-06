@@ -16,9 +16,9 @@ instruments = "EUR_USD"
 
 
 def test_rest_connection():
-    # Initiate a connection, and get current EUR_USD price
-    oanda = oandapy.API(environment="live",
-                        access_token=settings.ACCESS_TOKEN)
+    """Initiate a connection, and get current EUR_USD price"""
+    oanda = oandapy.API(access_token=settings.ACCESS_TOKEN,
+                        environment=settings.DOMAIN)
 
     response = oanda.get_prices(instruments=instruments)
     prices = response.get("prices")
@@ -26,11 +26,12 @@ def test_rest_connection():
 
 
 def test_stream():
-    # Create the OANDA market price streaming class
-    # making sure to provide authentication commands
+    """Create the OANDA market price streaming class
+    making sure to provide authentication commands"""
+
     pairs = ['EURUSD']
 
-    # Fix the length of the queue to 5 objects
+    # Fix the length of the queue to 5 objects max
     events = queue.Queue(5)
 
     prices = StreamingForexPrices(
@@ -55,5 +56,3 @@ def test_stream():
         if n_lines >= max_lines:
             break
     response.connection.close()
-
-test_stream()

@@ -5,6 +5,7 @@ env:
   global:
   - secure: Zl7btrUwBaR9gGzYLCugba9cQBJeqgEou1iXmXw02ZcAORhSf/F6o+r9ckE//lllBLDJqhntXSA/ZWJ8blckRbHibXTYlB7F4s4hYhcLjmRNNXCcpVr4VvPCp9z3i4Gx0cKt2WQEOQ8BRmlF/ETYp4QmH2un1M0jjSsBso5wlbaB6dso31oe7ABlcom0iK5dLJPBW0lCbQLIeI2bO3UwNWqSgiJY+mBmVhKM7ezC3LgqEoq64KIKLXzFBbHqmhlIIjF7JKofoA/B8MVNWY0GfNumfYSATYyEY1Fn0LQ4BDVyuhzO9bYdtHxnTKHMbCvaMNltBZD0Cie3jT2+kf8BANSuF9/vwPDeh4FuBqK6uyxssy3ZgnJazYQHTB99eN11mRF7cSnqUPUaZY2qrbM5/uqFxDrid0COCsnTfCR7lCKAktPcX89fySO0J0g1AmFtBBCHM+/GuScP1/coBZQ677+HgGwH3BSNWGaQ2gMxhxfNa3uiR97m397kJFHZCWJPeq9rG9EX1x3YXMtotwQExCzytA4OKk0DbJkPLZThehkPnDv9TluTbBhYwl/FyvDCLzNA2tC+w3vq642az9XsIcCYQ8Zf5u3nAYeoyEeNET2w+P5slV31u48WHg8s5BMeC7SLj8XlB92iGnGieA9QIJJhPL7naUYTQ7DrOrRUv1g=
   - secure: r2IuNyr37Ji/8ITkiROJHruEAL9xsDC89F++QcWJPyQ+6LpDperOxz9pWBcy838M2iQ0Jlq6VSKsh8ISsq6k1PSreSUJTAzhj0KRdEr1WeqRgz0ST5Fw7mEjArKRzNxNiljfDwRXwWbSL3ygBw+Gw0x3soosSxipiIpXsA6PRsG0uMJECdTtxvWLFU+2AJRdVGbE5RNOZ5jcozlqcIjhbSSY0Qsrr+o1XKZWdE69fsf0drMsLNvM7PeIMwA6ZIDX05TTBpTe9SvN1VqfTOidbqEs8dIYi/2pduPZWDfmybkH8AQfoFFzsS29m4FxrA/506Qj8lVO+xBPEQTP37q+8GkEFh0vqpKS2nAuXaQJIrXAw6M+tWFerVEzdGaSbP/BaVyoXxcFVVUwLRllEJ9PCuhoqhTAI04fBb6qPyy0WR3Oro78kjG0sICjVH/ieVe11EWpsgj0urbJFv67hxYqWLwjwZhT573xAeyNtYUCwkQ68g3tR/7car99jv329pjqf4Pb6e/xCzwlT1yHu/SOpXTIM33YVj+wmxBJi0DHE2S7ABN+ywg0Lke+LuC9ujjPF20pdS4VLjsmT5a2WNHt+bU+1tp6Czatqz+4V/aWxut17ncEwJ5no9Vw4Fuh0zTD3wK12GOc/u05NGSwed3KwUbmBsFICKrOFQzxeJqbJ6c=
+  - secure: DgOs3DUD7ciujDqn6qEyEH3+V2V7n9mWzBTq0z2clmnbtYa2fPK1hq/wZjmI9GeNYP/GlQBvimN1HWhHWzK+LerT0DfwGmJifQ+qo8W80M61W2TVSWJmv5BQe186Sy8+aq2Edc8W7Mm0qMx4tk6pZau9lvKPSX+D9iZ8fkqp1q8To/1olGdbUtEH6XSRXG1uzW17bMeaFoCxKmFOeBbBlsjp9fPoptp2I2d2yAKIOP7Ff8AOrtfKH2MdJb0PvdPK4/Ra0qRq8kzO3HGuhpQla2RJrbp3c7bhVXFzeUZDvYiA9LkLa6imYbOG5+nv9R6RluAysPnTrPpLqSkVh3WSMToVKTuzQ6NADUi1L0MYQ1AUPEI4tIoK8AmeoMgRiSMntXqZBSxg1/k94OvwltuIXkhem4myB+Zl5lXueV1Q11oeDpBuC+Ef5m6Q+WpNKgbJ9syq8nL56gVBFR37zKsd9+CYiMV4iIUPPc8FUnpqE/QRA5MWqtRrYH3cnMduVD/sDmXow4wJt6pMgMCTq4TS+SMxWehmfxkFI/ZpyD9qxHEAtb8f1vtKdPpbpvftuTIeYoIguGznuXw6VWck9OQz1y7hJL0hK3Zs30K5Z29ch267C+M19/hsnLyk+tdRKMoXTUu9LBqe439qQqinF5ouNtsxgWQ4el974w3yhIsRKUY=
 before_install:
 - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
 - chmod +x miniconda.sh
@@ -22,6 +23,7 @@ install:
 - pip install git+https://github.com/oanda/oandapy.git
 - pip install coveralls
 script:
-- nosetests --with-coverage --cover-package=event --cover-package=backtest --cover-package=execution --cover-package=portfolio --cover-package=strategy --cover-package=trading --cover-package=performance tests
-#after_success:
-- coveralls 
+- nosetests --with-coverage --cover-package=event --cover-package=backtest --cover-package=execution
+  --cover-package=portfolio --cover-package=strategy --cover-package=trading --cover-package=performance
+  tests
+- coveralls

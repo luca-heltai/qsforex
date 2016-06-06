@@ -2,7 +2,7 @@ from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 import unittest
 
 from qsforex.portfolio.portfolio import Portfolio
-from qsforex.portfolio.position_test import TickerMock
+from qsforex.tests.test_position import TickerMock
 from qsforex.portfolio.position import Position
 
 

@@ -23,7 +23,7 @@ class ExecutionHandler(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def execute_order(self):
+    def execute_order(self, event):
         """
         Send the order to the brokerage.
         """
