@@ -6,7 +6,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TIMEZONE = 'Europe/Rome'
 CELERY_ENABLE_UTC = True
-CELERY_IMPORTS = ("qsforex.controller.tasks", )
+CELERY_IMPORTS = ("qsforex.library.price_handlers")
 
 # This will be necessary when we start doing real stuff
 # CELERY_ANNOTATIONS = {

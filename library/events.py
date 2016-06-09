@@ -17,8 +17,6 @@ class TickEvent(Event):
             str(self.time), str(self.bid), str(self.ask)
         )
 
-    def __repr__(self):
-        return str(self)
 
 
 class SignalEvent(Event):

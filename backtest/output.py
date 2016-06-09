@@ -1,12 +1,7 @@
-import os
 import os.path
 
 import pandas as pd
-import matplotlib
-try:
-    matplotlib.use('TkAgg')
-except:
-    pass
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 

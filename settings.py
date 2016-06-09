@@ -28,3 +28,4 @@ ACCOUNT_ID = os.environ.get('OANDA_API_ACCOUNT_ID', None)
 
 BASE_CURRENCY = "EUR"
 EQUITY = Decimal("100.00")
+PAIRS = ['EURUSD']
