@@ -18,7 +18,6 @@ class TickEvent(Event):
         )
 
 
-
 class SignalEvent(Event):
 
     def __init__(self, instrument, order_type, side, time):

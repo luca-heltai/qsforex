@@ -7,7 +7,7 @@ import os
 
 import pandas as pd
 
-from qsforex.event.event import OrderEvent
+from qsforex.library.events import OrderEvent
 from qsforex.performance.performance import create_drawdowns
 from qsforex.portfolio.position import Position
 from qsforex.settings import OUTPUT_RESULTS_DIR
