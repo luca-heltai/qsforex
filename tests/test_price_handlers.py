@@ -1,6 +1,6 @@
-from qsforex.library.price_handlers import *
+from qsforex.library.price_handlers import StreamingForexPrices, RandomPriceHandler, HistoricCSVPriceHandler
 from nose.tools import eq_
-
+from decimal import Decimal
 
 def test_streaming_price_handler():
     ph = StreamingForexPrices()
