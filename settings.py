@@ -1,6 +1,5 @@
 from decimal import Decimal
-import os
-
+import inspect, os
 
 ENVIRONMENTS = {
     "streaming": {
@@ -15,7 +14,7 @@ ENVIRONMENTS = {
     }
 }
 
-qsforexdir = "/Users/heltai/forex/qsforex"
+qsforexdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
 CSV_DATA_DIR = qsforexdir + "/csv_files"
 OUTPUT_RESULTS_DIR = qsforexdir + "/output_dir"
