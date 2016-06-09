@@ -92,6 +92,7 @@ class PriceHandler(Task):
         raise NameError(
             'This is an abstract class. Overload your run function to return a TickEvent')
 
+
 class HistoricCSVPriceHandler(PriceHandler):
     """
     HistoricCSVPriceHandler is designed to read CSV files of
@@ -130,7 +131,7 @@ class HistoricCSVPriceHandler(PriceHandler):
         files = os.listdir(self.csv_dir)
         matching_files = []
         for pair in self.pairs:
-            pattern = re.compile(pair+"_\d{8}.csv")
+            pattern = re.compile(pair + "_\d{8}.csv")
             matching_files += [f for f in files if pattern.search(f)]
             matching_files.sort()
         return matching_files
@@ -221,10 +222,10 @@ class HistoricCSVPriceHandler(PriceHandler):
 class StreamingForexPrices(PriceHandler):
 
     def initialize(self,
-                domain=settings.STREAM_DOMAIN,
-                access_token=settings.ACCESS_TOKEN,
-                account_id=settings.ACCOUNT_ID,
-                pairs=settings.PAIRS):
+                   domain=settings.STREAM_DOMAIN,
+                   access_token=settings.ACCESS_TOKEN,
+                   account_id=settings.ACCOUNT_ID,
+                   pairs=settings.PAIRS):
         self.domain = domain
         self.access_token = access_token
         self.account_id = account_id
@@ -329,7 +330,8 @@ class RandomPriceHandler(PriceHandler):
         if self._initialized == False:
             raise NameError("Not initialized! Run initialize()")
         dt = abs(np.random.normal(self.mu_dt, self.sigma_dt))
-        W = self.to_decimal(np.random.standard_normal() * dt / 1000.0 / 86400.0)
+        W = self.to_decimal(np.random.standard_normal()
+                            * dt / 1000.0 / 86400.0)
         self.ask += W
         self.bid += W
 
