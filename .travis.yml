@@ -23,6 +23,7 @@ install:
 - pip install git+https://github.com/oanda/oandapy.git
 - pip install coveralls
 - pip install celery
+- pip install mock
 script:
 - nosetests --with-coverage --cover-package=event --cover-package=backtest --cover-package=execution
   --cover-package=portfolio --cover-package=strategy --cover-package=trading --cover-package=performance
