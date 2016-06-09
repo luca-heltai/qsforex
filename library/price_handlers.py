@@ -1,13 +1,10 @@
 from __future__ import print_function
 
-import datetime
 from decimal import Decimal, getcontext, ROUND_HALF_DOWN
 import os
 import os.path
 import re
-import copy
 import datetime
-import sys
 
 import logging
 import json
@@ -288,17 +285,13 @@ class StreamingForexPrices(PriceHandler):
     def run(self):
         for line in self.stream.iter_lines(1):
             tev = self.process_line(line)
-            if tev != None:
+            if tev is not None:
                 return tev
-            break
 
     def stream_to_queue(self, events_queue):
-        response = self.connect_to_stream()
-        if response.status_code is not 200:
-            return
-        for line in response.iter_lines(1):
-            tev = process_line(line)
-            if tev != None:
+        for line in self.stream.iter_lines(1):
+            tev = self.process_line(line)
+            if tev is not None:
                 events_queue.put(tev)
 
 

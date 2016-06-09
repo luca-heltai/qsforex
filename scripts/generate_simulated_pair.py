@@ -1,15 +1,11 @@
 from __future__ import print_function
 
 import calendar
-import copy
-import datetime
-import os
 import os.path
 import sys
 from datetime import datetime
 
 import numpy as np
-import pandas as pd
 
 from qsforex import settings
 from qsforex.library.price_handlers import RandomPriceHandler
@@ -47,15 +43,14 @@ if __name__ == "__main__":
     # for each day, e.g. "GBPUSD_20150101.csv"
     for d in days:
         rph.current_time = rph.current_time.replace(day=d.day)
-        print(settings.CSV_DATA_DIR)
-        outfile = open(
-            os.path.join(
-                settings.CSV_DATA_DIR,
-                "%s_%s.csv" % (
-                    pair, d.strftime("%Y%m%d")
-                )
-            ),
-            "w")
+        filename = os.path.join(
+            settings.CSV_DATA_DIR,
+            "%s_%s.csv" % (
+                pair, d.strftime("%Y%m%d")
+            )
+        )
+        outfile = open(filename,"w")
+        print(filename)
         outfile.write("Time,Ask,Bid,AskVolume,BidVolume\n")
 
         # Create the random walk for the bid/ask prices
